@@ -1,18 +1,18 @@
 WITH orgs AS (
 --prod
-    SELECT
-        org_id
-        , MIN(event_timestamp) AS created_at
-    FROM {{ ref('signed_in') }}
-    GROUP BY 1
-
--- --dev
---    SELECT
+--     SELECT
 --         org_id
---         , org_name
---         , employee_range
---         , created_at
---     FROM {{ ref('org_created') }}
+--         , MIN(event_timestamp) AS created_at
+--     FROM {{ ref('signed_in') }}
+--     GROUP BY 1
+
+--dev
+   SELECT
+        org_id
+        , org_name
+        , employee_range
+        , created_at
+    FROM {{ ref('org_created') }}
 )
 
 , user_count AS (
@@ -43,3 +43,4 @@ SELECT
 FROM orgs
 LEFT JOIN user_count on orgs.org_id = user_count.org_id
 LEFT JOIN subscriptions on orgs.org_id = subscriptions.org_id
+limit 100
