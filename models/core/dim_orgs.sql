@@ -37,7 +37,7 @@ SELECT
     orgs.org_id
     , created_at
     , num_users
-    , sub_created_at
+    , to_timestamp(sub_created_at) as sub_created_at
     , sub_plan
     , sub_price
 FROM orgs
